@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage({
-  name:'Pagina3'
+  name:'mi-pagina3'
 })
 @Component({
   selector: 'page-pagina3',

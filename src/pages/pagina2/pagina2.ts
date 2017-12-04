@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, AlertController, LoadingController } from 'ionic-angular';
 
 @Component({
   selector: 'page-pagina2',
@@ -7,8 +7,9 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class Pagina2Page {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(private navCtrl: NavController,
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController) { }
 
   ir_pagina3() {
     this.navCtrl.push("mi-pagina3");
@@ -40,24 +41,54 @@ export class Pagina2Page {
 
   ionViewCanEnter() {
     console.log('ionViewCanEnter');
-    const numero = Math.round(Math.random() * 10);
-    console.log(numero);
+    // const numero = Math.round(Math.random() * 10);
+    // console.log(numero);
 
-    if (numero >= 3) {
-      return true;
-    } else {
-      return false;
-    }
+    // if (numero >= 3) {
+    //   return true;
+    // } else {
+    //   return false;
+    // }
+    const promesa = new Promise((resolve, reject) => {
+
+      const confirm = this.alertCtrl.create({
+        title: '¿Seguro?',
+        message: '¿Está seguro que desea entrar?',
+        buttons: [
+          {
+            text: 'Cancelar',
+            handler: () => {
+              resolve(false);
+            }
+          },
+          {
+            text: 'Sí, seguro',
+            handler: () => {
+              resolve(true);
+            }
+          }
+        ]
+      });
+      confirm.present();
+
+    });
+
+    return promesa;
+
   }
 
   ionViewCanLeave() {
     console.log('ionViewCanLeave');
-    console.log("Espere 2 segundos para salir");
 
     const promesa = new Promise((resolve, reject) => {
-      setTimeout(() => {
+      const loader = this.loadingCtrl.create({
+        content: "Espere por favor...",
+        duration: 2000
+      });
+      loader.present();
+      loader.onDidDismiss(() => {
         resolve(true);
-      }, 2000);
+      });
     });
 
     return promesa;

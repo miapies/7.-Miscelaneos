@@ -16,14 +16,13 @@ export class AjustesProvider {
   }
 
   cargar_storage() {
-
     const promesa = new Promise((resolve, reject) => {
 
       if (this.platform.is('cordova')) {
         // Dispositivo
         this.storage.get('ajustes')
           .then((val) => {
-            if(val) {
+            if (val) {
               this.ajustes = val;
               console.log('Ajustes: ' + JSON.stringify(this.ajustes));
             }
@@ -31,9 +30,13 @@ export class AjustesProvider {
           })
           .catch((error) => console.error('Error: ' + JSON.stringify(error)));
 
-      } else if (localStorage.getItem('ajustes')) {
+      } else {
         // Escritorio
-        this.ajustes = JSON.parse(localStorage.getItem('ajustes'));
+        if (localStorage.getItem('ajustes')) {
+          this.ajustes = JSON.parse(localStorage.getItem('ajustes'));
+        }
+        console.log('Ajustes: ' + JSON.stringify(this.ajustes));
+        resolve();
       }
 
     });

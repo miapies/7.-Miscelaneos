@@ -91,6 +91,19 @@ export class Pagina2Page {
       });
     });
 
+    // Otra forma
+    // let loading = this.loadingCtrl.create({
+    //   content: "Espere por favor..."
+    // });
+    // loading.present();
+
+    // let promesa = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     loading.dismiss();
+    //     resolve(true)
+    //   }, 2000);
+    // })
+
     return promesa;
   }
 }
